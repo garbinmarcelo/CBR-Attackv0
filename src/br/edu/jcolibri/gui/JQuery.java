@@ -28,7 +28,7 @@ public class JQuery extends javax.swing.JPanel {
 
     private JPrincipal jPrincipal;
     private ArrayList<JAttributeListener> jAttributeListenerList = new ArrayList();
-    
+
     /**
      * Creates new form JSearchCase
      *
@@ -42,9 +42,9 @@ public class JQuery extends javax.swing.JPanel {
     private void init(JPrincipal jPrincipal) {
 
         try {
-            initGrid1();      
+            initGrid1();
             this.jPrincipal = jPrincipal;
-            
+
         } catch (Exception e) {
             LogReport.insertLog("Error at search init.", e, true);
         }
@@ -57,12 +57,13 @@ public class JQuery extends javax.swing.JPanel {
         attributes.add(Attribute.IPORIGEM);
         attributes.add(Attribute.PORTASORIGEM);
         attributes.add(Attribute.URLMALICIOSA);
-        attributes.add(Attribute.NOMEMALWAREFALHA);
         attributes.add(Attribute.HOSTNAMEORIGEM);
+        attributes.add(Attribute.IPCC);
         attributes.add(Attribute.PORTACC);
         attributes.add(Attribute.HOSTNAMECC);
+        attributes.add(Attribute.NOMEMALWAREFALHA);
         attributes.add(Attribute.SISTEMAOPERACIONAL);
-        attributes.add(Attribute.IPCC);
+        attributes.add(Attribute.TENTATIVAS);
         for (Attribute attribute : attributes) {
             JAttributeListener jAttributeListener = new JAttributeListener(jPrincipal, attribute, null);
             jAttributeListener.setJTextFieldEnabled(attribute == Attribute.TIPO);
@@ -71,11 +72,11 @@ public class JQuery extends javax.swing.JPanel {
             jPanel_Grid1.add(jAttributeListener);
         }
         JPanel jPanelBorder = new JPanel(new java.awt.BorderLayout());
-        jPanelBorder.setBackground(new Color(255,255,255));
+        jPanelBorder.setBackground(new Color(255, 255, 255));
         jPanelBorder.setPreferredSize(new Dimension(1000, 1000));
         jPanel_Grid1.add(jPanelBorder);
     }
-    
+
     private void cleanQuery() {
         init(jPrincipal);
     }
@@ -83,48 +84,55 @@ public class JQuery extends javax.swing.JPanel {
     private void search() {
         jPrincipal.query(this);
     }
- 
-    private void setQuery(JAttributeListener jAttributeListener, Object objQuery, String param) {
 
-        if (objQuery instanceof Description) {
+    private void setQuery(JAttributeListener jAttributeListener, Object objQuery, String param) {
+        if(objQuery instanceof Description) {
             Description queryDesc = (Description) objQuery;
-            if (null != jAttributeListener.getAttribute()) switch (jAttributeListener.getAttribute()) {
-                case HORADETEC:
-                    queryDesc.setHoraDetec(param);
-                    break;
-                case IPORIGEM:
-                    queryDesc.setIpOrigem(param);
-                    break;
-                case PORTASORIGEM:
-                    queryDesc.setPortasOrigem(param);
-                    break;
-                case URLMALICIOSA:
-                    queryDesc.setUrlMaliciosa(param);
-                    break;
-                case IPCC:
-                    queryDesc.setIpCC(param);
-                    break;
-                case HOSTNAMEORIGEM:
-                    queryDesc.setHostnameOrigem(param);
-                    break;
-                case HOSTNAMECC:
-                    queryDesc.setHostnameCC(param);
-                    break;
-                case PORTACC:
-                    queryDesc.setPortaCC(param);
-                    break;
-                case NOMEMALWAREFALHA:
-                    queryDesc.setNomeMalwareFalha(param);
-                    break;
-                case SISTEMAOPERACIONAL:
-                    queryDesc.setSistemasOperacional(param);
-                    break;
-                default:
-                    break;
+            if(null != jAttributeListener.getAttribute()) {
+                switch (jAttributeListener.getAttribute()) {
+                    case TIPO:
+                        queryDesc.setTipo(param);
+                        break;
+                    case HORADETEC:
+                        queryDesc.setHoraDetec(param);
+                        break;
+                    case IPORIGEM:
+                        queryDesc.setIpOrigem(param);
+                        break;
+                    case PORTASORIGEM:
+                        queryDesc.setPortasOrigem(param);
+                        break;
+                    case URLMALICIOSA:
+                        queryDesc.setUrlMaliciosa(param);
+                        break;
+                    case IPCC:
+                        queryDesc.setIpCC(param);
+                        break;
+                    case HOSTNAMEORIGEM:
+                        queryDesc.setHostnameOrigem(param);
+                        break;
+                    case HOSTNAMECC:
+                        queryDesc.setHostnameCC(param);
+                        break;
+                    case PORTACC:
+                        queryDesc.setPortaCC(param);
+                        break;
+                    case NOMEMALWAREFALHA:
+                        queryDesc.setNomeMalwareFalha(param);
+                        break;
+                    case SISTEMAOPERACIONAL:
+                        queryDesc.setSistemaOperacional(param);
+                        break;
+                    case TENTATIVAS:
+                        queryDesc.setTentativas(param);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
-    
+
     public CBRQuery getCBRQuery() {
 
         Description queryDesc = new Description();
@@ -134,8 +142,8 @@ public class JQuery extends javax.swing.JPanel {
             for (String string : jAttributeListener.getList()) {
                 param += string.replace(" ", "") + " ";
             }
-            if(!jAttributeListener.getList().isEmpty()){
-                param = param.substring(0, param.length() -1);
+            if (!jAttributeListener.getList().isEmpty()) {
+                param = param.substring(0, param.length() - 1);
             }
             setQuery(jAttributeListener, queryDesc, param);
         }
@@ -145,16 +153,16 @@ public class JQuery extends javax.swing.JPanel {
         return query;
     }
 
-    private String getTodayExecutionLogs(){
+    private String getTodayExecutionLogs() {
         Date today = new Timestamp(new Date().getTime());
         Double totalFail = 0d;
         Integer totalCases = Session.getCBR().getCaseBase().getCases().size();
         for (CBRCase aCase : Session.getCBR().getCaseBase().getCases()) {
             String item = ((Description) aCase.getDescription()).getHostnameCC();
-            if(item == null || item.isEmpty() || item.toLowerCase().equals("null")){
+            if (item == null || item.isEmpty() || item.toLowerCase().equals("null")) {
                 continue;
             }
-            
+
             String[] split = item.split(" ");
             for (String string : split) {
                 String[] split2 = string.split("\\|");
@@ -168,7 +176,7 @@ public class JQuery extends javax.swing.JPanel {
         String executionLog = DateUtils.dateToString(today, "dd/MM/yyyy") + "|"
                 + DateUtils.dateToString(today, "HH:mm") + "|"
                 + average;
-        
+
         return executionLog;
     }
 
@@ -179,8 +187,7 @@ public class JQuery extends javax.swing.JPanel {
     public void setjAttributeListenerList(ArrayList<JAttributeListener> jAttributeListenerList) {
         this.jAttributeListenerList = jAttributeListenerList;
     }
-        
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

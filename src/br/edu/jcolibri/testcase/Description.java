@@ -20,7 +20,7 @@ public class Description implements CaseComponent {
     private String PortaCC;
     private String HostnameCC;
     private String NomeMalwareFalha;
-    private String SistemasOperacional;
+    private String SistemaOperacional;
     private String Tentativas;
     private Integer passo1;
     private Integer passo2;
@@ -42,7 +42,7 @@ public class Description implements CaseComponent {
         return "(" + this.id + "," + this.Tipo + "," + this.HoraDetec + "," + this.IpOrigem + ","
                 + this.PortasOrigem + "," + this.UrlMaliciosa + "," + this.HostnameOrigem + ","
                 + this.IpCC + "," + this.HostnameCC + ","
-                + this.NomeMalwareFalha + "," + this.SistemasOperacional + this.Tentativas + "," + ")";
+                + this.NomeMalwareFalha + "," + this.SistemaOperacional + this.Tentativas + "," + ")";
     }
 
     public String getId() {
@@ -133,12 +133,12 @@ public class Description implements CaseComponent {
         this.NomeMalwareFalha = NomeMalwareFalha;
     }
 
-    public String getSistemasOperacional() {
-        return SistemasOperacional;
+    public String getSistemaOperacional() {
+        return SistemaOperacional;
     }
 
-    public void setSistemasOperacional(String SistemasOperacional) {
-        this.SistemasOperacional = SistemasOperacional;
+    public void setSistemaOperacional(String SistemaOperacional) {
+        this.SistemaOperacional = SistemaOperacional;
     }
 
     public String getPortaCC() {

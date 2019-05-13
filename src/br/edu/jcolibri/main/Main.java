@@ -34,7 +34,7 @@ public class Main  {
         //</editor-fold>
         
         Session.updateCBR();
-        JPrincipal jPrincipal = new JPrincipal();
-        jPrincipal.setVisible(true);
+        //JPrincipal jPrincipal = new JPrincipal();
+        //jPrincipal.setVisible(true);
     }
 }

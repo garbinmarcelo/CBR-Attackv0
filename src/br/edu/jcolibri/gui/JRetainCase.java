@@ -195,7 +195,7 @@ public class JRetainCase extends javax.swing.JPanel {
         jAttributeListenerMap.get(Attribute.HOSTNAMEORIGEM.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getHostnameOrigem()));
         jAttributeListenerMap.get(Attribute.PORTACC.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getPortaCC()));
         jAttributeListenerMap.get(Attribute.HOSTNAMECC.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getHostnameCC()));
-        jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getSistemasOperacional()));
+        jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getSistemaOperacional()));
         jAttributeListenerMap.get(Attribute.TENTATIVAS.name).addList(getListFromVetString(((Description)cbrCase.getDescription()).getTentativas()));
     }
     
@@ -247,7 +247,7 @@ public class JRetainCase extends javax.swing.JPanel {
         
         description.setTentativas(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.PORTACC.name).getJList())));
         description.setHostnameCC(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.HOSTNAMECC.name).getJList())));
-        description.setSistemasOperacional(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).getJList())));
+        description.setSistemaOperacional(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).getJList())));
         description.setTentativas(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.TENTATIVAS.name).getJList())));
         
         newcase.setDescription(description);
@@ -293,7 +293,7 @@ public class JRetainCase extends javax.swing.JPanel {
         
         description.setPortaCC(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.PORTACC.name).getJList())));
         description.setHostnameCC(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.HOSTNAMECC.name).getJList())));
-        description.setSistemasOperacional(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).getJList())));
+        description.setSistemaOperacional(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.SISTEMAOPERACIONAL.name).getJList())));
         description.setTentativas(getStringFromArray(getArrayFromJList(jAttributeListenerMap.get(Attribute.TENTATIVAS.name).getJList())));
         newcase.setDescription(description);
 

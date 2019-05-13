@@ -310,7 +310,7 @@ public class CBR implements StandardCBRApplication {
     public ArrayList<String> getInputs() {
         ArrayList<String> list = new ArrayList();
         for (CBRCase aCase : this.getCaseBase().getCases()) {
-            String item = ((Description) aCase.getDescription()).getSistemasOperacional();
+            String item = ((Description) aCase.getDescription()).getSistemaOperacional();
             if (item == null) {
                 continue;
             }

@@ -31,15 +31,15 @@ public enum Attribute {
         this.name = name;
         this.weight = weight;
     }
-    
+
     public void setWeight(Double weight) {
         this.weight = weight;
     }
-    
-    public static Double getWeight(Attribute attribute){
+
+    public static Double getWeight(Attribute attribute) {
         switch (attribute) {
             case TIPO:
-                return HORADETEC.weight;
+                return TIPO.weight;
             case HORADETEC:
                 return HORADETEC.weight;
             case IPORIGEM:
@@ -60,6 +60,8 @@ public enum Attribute {
                 return NOMEMALWAREFALHA.weight;
             case SISTEMAOPERACIONAL:
                 return SISTEMAOPERACIONAL.weight;
+            case TENTATIVAS:
+                return TENTATIVAS.weight;
             default:
                 return 0d;
         }
