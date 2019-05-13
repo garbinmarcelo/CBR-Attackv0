@@ -1,0 +1,6 @@
+/nbproject/private/
+/build/
+/dist/
+/bin/
+/src/br/edu/jcolibri/testcase/*.txt
+/src/br/edu/jcolibri/testcase/*.csv

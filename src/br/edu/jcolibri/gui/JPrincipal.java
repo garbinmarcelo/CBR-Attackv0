@@ -1,0 +1,340 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.edu.jcolibri.gui;
+
+import br.edu.jcolibri.utils.FileUtils;
+import br.edu.jcolibri.utils.Session;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.swing.JFrame;
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.method.retrieve.RetrievalResult;
+import ssu.log.LogReport;
+
+/**
+ *
+ * @author Lori Machado Filho
+ */
+public class JPrincipal extends javax.swing.JFrame {
+
+    JViewCaseBase jViewCaseBase = null;
+    JQuery jSearchCase = null;
+    JRetainCase jRetainCase = null;
+    /**
+     * Creates new form JPrincipal
+     */
+    public JPrincipal() {
+        init();
+    }
+    
+    private void init(){
+        initComponents();
+        FileUtils.loadCBRFile();
+        JPrincipal.this.query();        
+    }
+    
+    private void updateUI(){
+        setVisible(true);
+        this.setExtendedState(JFrame.MAXIMIZED_VERT);    
+    }
+
+    public void viewCaseBase(){
+        if(jViewCaseBase == null){
+            jViewCaseBase = new JViewCaseBase(this);
+        } else {
+            jViewCaseBase.setJprincipal(this);
+            jViewCaseBase.setJSearchCase(null);
+        }
+        jViewCaseBase.refresh();
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jViewCaseBase);
+        updateUI();
+    }
+    
+    private void configQuery(){
+        JSimilaritySetup jConfig = new JSimilaritySetup(this, true);
+        jConfig.setVisible(true);
+    }
+    
+    public void query() {
+        if(jSearchCase == null){
+            jSearchCase = new JQuery(this);
+        }
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jSearchCase);
+       updateUI();
+    }
+    
+    public void query(JQuery jQuery) {
+        if(jRetainCase == null){
+            jRetainCase = new JRetainCase(this);
+        } else {
+//            jLearnCase.setJprincipal(this);
+        }
+        jRetainCase.loadCase(retrieveCases(jQuery));
+//        jLearnCase.refresh();
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jRetainCase);
+        updateUI();
+    }
+    
+    private Collection<RetrievalResult> retrieveCases(JQuery jQuery) {
+        try {
+                Session.getCBR().setK(Session.getK());
+                Session.getCBR().setjAttributeListenerList(jQuery.getjAttributeListenerList());
+                Session.getCBR().cycle(jSearchCase.getCBRQuery());
+                Session.getCBR().postCycle();
+                updateRetrievalResultWithSimilarity(Session.getCBR().getEval());
+        } catch (Exception ex){
+            LogReport.insertLog("Error retrieving cases.", ex, true);
+            return new ArrayList();
+        }
+        return Session.getCBR().getEval();
+    }
+    
+     private synchronized void updateRetrievalResultWithSimilarity(Collection<RetrievalResult> cases) {
+        ArrayList<RetrievalResult> remove = new ArrayList();
+        for (RetrievalResult aCase : cases) {
+            if((aCase.getEval() *100d) < Session.getMinimunSimilarity()){
+                remove.add(aCase);
+            }
+        }
+        for (RetrievalResult aCase : remove) {
+            cases.remove(aCase);            
+        }
+    }
+    
+    public void searchCaseViewOld(JQuery jSearchCase) {
+        if(jViewCaseBase == null){
+            jViewCaseBase = new JViewCaseBase(this, jSearchCase);
+        } else {
+            jViewCaseBase.setJprincipal(this);
+            jViewCaseBase.setJSearchCase(jSearchCase);
+            jViewCaseBase.refresh();
+        }
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jViewCaseBase);
+        updateUI();
+    }
+    
+    public void learnCase(JRetainCase jLearnCase, CBRCase cbrCase) {
+        if(jLearnCase == null){
+            jLearnCase = new JRetainCase(this);
+        } 
+        if(cbrCase != null){
+            jLearnCase.loadCase(cbrCase);
+        }
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jLearnCase);
+        updateUI();
+    }
+    
+    public void learnCase(JRetainCase jLearnCase, ArrayList<RetrievalResult> retrievalResults) {
+        if(jLearnCase == null){
+            jLearnCase = new JRetainCase(this);
+        } 
+        if(retrievalResults != null && !retrievalResults.isEmpty()){
+            jLearnCase.loadCase(retrievalResults);
+        }
+        jPanel_Components.removeAll();
+        jPanel_Components.add(jLearnCase);
+        updateUI();
+    }
+    
+    public void addCase() {
+        learnCase(null, (CBRCase) null);
+}
+    
+    private void about(){
+        LogReport.insertLog("Not Implemented yet", null, true);
+    }
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel_Components = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem_Query = new javax.swing.JMenuItem();
+        jMenuItem_AddCase = new javax.swing.JMenuItem();
+        jMenuItem_ViewCaseBase = new javax.swing.JMenuItem();
+        jMenuItem_SimilaritySetup = new javax.swing.JMenuItem();
+        jMenuItem_Exit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(400, 200));
+        setPreferredSize(new java.awt.Dimension(1000, 800));
+
+        jPanel1.setBackground(new java.awt.Color(98, 126, 146));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Case-Based Software Testing 1.0");
+        jPanel1.add(jLabel1);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel_Components.setBackground(new java.awt.Color(254, 254, 254));
+        jPanel_Components.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanel_Components);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jMenu1.setText("System functionalities");
+
+        jMenuItem_Query.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Query.setText("Query");
+        jMenuItem_Query.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_QueryActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_Query);
+
+        jMenuItem_AddCase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_AddCase.setText("Add case");
+        jMenuItem_AddCase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddCaseActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_AddCase);
+
+        jMenuItem_ViewCaseBase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_ViewCaseBase.setText("View cases base");
+        jMenuItem_ViewCaseBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ViewCaseBaseActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_ViewCaseBase);
+
+        jMenuItem_SimilaritySetup.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_SimilaritySetup.setText("Similarity setup");
+        jMenuItem_SimilaritySetup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_SimilaritySetupActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_SimilaritySetup);
+
+        jMenuItem_Exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem_Exit.setText("Exit");
+        jMenuItem_Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_Exit);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Help");
+
+        jMenuItem2.setText("About");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem_QueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_QueryActionPerformed
+        query();
+    }//GEN-LAST:event_jMenuItem_QueryActionPerformed
+
+    private void jMenuItem_AddCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddCaseActionPerformed
+        addCase();
+    }//GEN-LAST:event_jMenuItem_AddCaseActionPerformed
+
+    private void jMenuItem_ViewCaseBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ViewCaseBaseActionPerformed
+        viewCaseBase();
+    }//GEN-LAST:event_jMenuItem_ViewCaseBaseActionPerformed
+
+    private void jMenuItem_SimilaritySetupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SimilaritySetupActionPerformed
+        configQuery();
+    }//GEN-LAST:event_jMenuItem_SimilaritySetupActionPerformed
+
+    private void jMenuItem_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ExitActionPerformed
+        dispose();
+    }//GEN-LAST:event_jMenuItem_ExitActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        about();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(JPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new JPrincipal().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem_AddCase;
+    private javax.swing.JMenuItem jMenuItem_Exit;
+    private javax.swing.JMenuItem jMenuItem_Query;
+    private javax.swing.JMenuItem jMenuItem_SimilaritySetup;
+    private javax.swing.JMenuItem jMenuItem_ViewCaseBase;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel_Components;
+    // End of variables declaration//GEN-END:variables
+}

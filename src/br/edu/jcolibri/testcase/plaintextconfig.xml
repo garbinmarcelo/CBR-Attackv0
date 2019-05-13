@@ -1,0 +1,33 @@
+<TextFileConfiguration>
+    <FilePath>br/edu/jcolibri/testcase/CasesBaseNull.txt</FilePath>
+    <Delimiters>;</Delimiters>
+    <DescriptionClassName>br.edu.jcolibri.testcase.Description</DescriptionClassName>
+    <DescriptionMappings>
+        <Map>Tipo</Map>
+        <Map>HoraDetec</Map>
+        <Map>IpOrigem</Map>
+        <Map>PortasOrigem</Map>
+        <Map>UrlMaliciosa</Map>
+        <Map>HostnameOrigem</Map>
+        <Map>IpCC</Map>
+        <Map>PortaCC</Map>
+        <Map>HostnameCC</Map>
+        <Map>NomeMalwareFalha</Map>
+        <Map>SistemaOperacional</Map>
+        <Map>Tentativas</Map>		
+        <Map>passo1</Map>
+        <Map>passo2</Map>
+        <Map>passo3</Map>
+        <Map>passo4</Map>
+        <Map>passo5</Map>
+        <Map>passo6</Map>
+        <Map>passo7</Map>
+        <Map>passo8</Map>
+        <Map>passo9</Map>
+        <Map>passo10</Map>
+        <Map>passo11</Map>
+        <Map>passo12</Map>
+        <Map>passo13</Map>
+        <Map>passo14</Map>
+    </DescriptionMappings>
+</TextFileConfiguration>

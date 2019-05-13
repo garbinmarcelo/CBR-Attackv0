@@ -1,0 +1,22 @@
+[23/01/2019 20:08:18] - Error at search init.
+    java.lang.NullPointerException
+	at br.edu.jcolibri.utils.components.JAttributeListener.<init>(JAttributeListener.java:25)
+	at br.edu.jcolibri.gui.JSearchCase.initGrid1(JSearchCase.java:61)
+	at br.edu.jcolibri.gui.JSearchCase.init(JSearchCase.java:41)
+	at br.edu.jcolibri.gui.JSearchCase.<init>(JSearchCase.java:34)
+	at br.edu.jcolibri.gui.JPrincipal.searchCase(JPrincipal.java:54)
+	at br.edu.jcolibri.gui.JPrincipal.init(JPrincipal.java:31)
+	at br.edu.jcolibri.gui.JPrincipal.<init>(JPrincipal.java:25)
+	at br.edu.jcolibri.main.Main.main(Main.java:36)
+
+[23/01/2019 20:08:43] - Error at search init.
+    java.lang.ClassCastException: javax.swing.JList$3 cannot be cast to javax.swing.DefaultListModel
+	at br.edu.jcolibri.utils.components.JAttributeListener.<init>(JAttributeListener.java:27)
+	at br.edu.jcolibri.gui.JSearchCase.initGrid1(JSearchCase.java:61)
+	at br.edu.jcolibri.gui.JSearchCase.init(JSearchCase.java:41)
+	at br.edu.jcolibri.gui.JSearchCase.<init>(JSearchCase.java:34)
+	at br.edu.jcolibri.gui.JPrincipal.searchCase(JPrincipal.java:54)
+	at br.edu.jcolibri.gui.JPrincipal.init(JPrincipal.java:31)
+	at br.edu.jcolibri.gui.JPrincipal.<init>(JPrincipal.java:25)
+	at br.edu.jcolibri.main.Main.main(Main.java:36)
+
